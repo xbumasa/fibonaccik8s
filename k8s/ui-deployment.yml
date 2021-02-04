@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: ui
+  template:
+    metadata:
+      labels:
+        component: ui
+    spec:
+      containers:
+        - name: fibonacci-ui
+          image: xbumasa/fibonacci-ui
+          ports:
+            - containerPort: 3000
+
+
+
+
