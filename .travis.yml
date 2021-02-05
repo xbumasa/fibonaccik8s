@@ -20,6 +20,7 @@ script:
   - docker run -e CI=true xbumasa/fibonaccik8s-ui-test npm run test -- --coverage
 deploy:
   provider: script
+  skip_cleanup: true
   script: bash ./deploy.sh
   on:
     branch: master
