@@ -13,7 +13,7 @@ before_install:
   - gcloud auth activate-service-account --key-file gcp-account.json
   - gcloud config set project udemy-k8s-303908
   - gcloud config set compute/zone us-central1-c
-  - gcloud container clusters get-credentials $GOOGLE_CLUSTER_NAME
+  - gcloud container clusters get-credentials udemy-k8s-travis@udemy-k8s-303908.iam.gserviceaccount.com
   - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_ID --password-stdin
   - docker build -t xbumasa/fibonaccik8s-ui-test -f ./ui/Dockerfile.dev ./ui
 script:
