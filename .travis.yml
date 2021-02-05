@@ -1,9 +1,37 @@
 sudo: required
 services:
   - docker
+env:
+  global:
+    - GIT_SHA=$(get rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
   - openssl aes-256-cbc -K $encrypted_2bd00b3d429c_key -iv $encrypted_2bd00b3d429c_iv -in gcp-account.json.enc -out gcp-account.json -d
   - curl https://sdk.cloud.google.com | bash > /dev/null;
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
-  - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud auth activate-service-account --key-file gcp-account.json
+  - gcloud config set project udemy-k8s-303908
+  - gcloud config set compute/zone us-central1-c
+  - gcloud container clusters get-credentials fibonacci-cluster
+  - echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_ID --password-stdin
+  - docker build -t xbumasa/fibonaccik8s-ui-test -f ./ui/Dockerfile.dev ./ui
+script:
+  - docker run -e CI=true xbumasa/fibonaccik8s-ui-test npm run test -- --coverage
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
+
+
+
+#after_success:
+#  - docker build -t xbumasa/fibonaccik8s-ui ./ui
+#  - docker build -t xbumasa/fibonaccik8s-nginx ./nginx
+#  - docker build -t xbumasa/fibonaccik8s-api ./api
+#  - docker build -t xbumasa/fibonaccik8s-worker ./worker
+#  - docker push xbumasa/fibonaccik8s-ui
+#  - docker push xbumasa/fibonaccik8s-nginx
+#  - docker push xbumasa/fibonaccik8s-api
+#  - docker push xbumasa/fibonaccik8s-worker
