@@ -8,6 +8,6 @@ docker push xbumasa/fibonaccik8s-ui:$GIT_SHA
 docker push xbumasa/fibonaccik8s-api:$GIT_SHA
 docker push xbumasa/fibonaccik8s-worker:$GIT_SHA
 kubectl apply -f k8s
-kubectl set image deployments/api-deployment api=xbumasa/fibonaccik8s-api:$GIT_SHA
-kubectl set image deployments/ui-deployment ui=xbumasa/fibonaccik8s-ui:$GIT_SHA
-kubectl set image deployments/worker-deployment worker=xbumasa/fibonaccik8s-worker:$GIT_SHA
+kubectl set image deployments/api-deployment fibonacci-api=xbumasa/fibonaccik8s-api:$GIT_SHA
+kubectl set image deployments/ui-deployment fibonacci-ui=xbumasa/fibonaccik8s-ui:$GIT_SHA
+kubectl set image deployments/worker-deployment fibonacci-worker=xbumasa/fibonaccik8s-worker:$GIT_SHA
