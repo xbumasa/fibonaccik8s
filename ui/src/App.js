@@ -8,8 +8,8 @@ function App() {
     <Router>
     <div className="App">
       <header className="App-header">
-        <Link to="/">Home</Link>
-        <Link to="/otherpage">Other Page #2</Link>
+        <Link to="/">Home K8S</Link>
+        <Link to="/otherpage">Other Page</Link>
       </header>
       <div>
         <Route exact path="/" component={Fib}/>
